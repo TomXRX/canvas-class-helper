@@ -214,6 +214,8 @@ class LoginSearcher(AdvancedSearcherer,Performer):
         if N:
             try:N.click()
             except TimeoutException:pass
+            return True
+        
 
 
 if __name__ == '__main__':

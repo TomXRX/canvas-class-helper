@@ -151,9 +151,10 @@ class Performer(Searcher):
                 self.driver.execute_script("window.scrollBy(0,300)")
     def wait_click(self,get,timeout=5,check=0.5):
         if type(get)==list:
+            ret=None
             for k in get:
-                self.wait_click(k)
-            return
+                if self.wait_click(k):ret=True
+            return ret
         assert type(get) == str
         for k in range(int(timeout/check)):
             g = self.advanced_finder_(get)

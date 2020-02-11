@@ -161,9 +161,12 @@ class Performer(Searcher):
                 self.advance_click(g)
                 break
             except Exception as e:
-                print(e)
-            print("checked")
+                pass
+                # print(e)
+            print(".",end="")
             time.sleep(check)
+        else:return 
+        return True
     def advance_click(self,element):
         try:element.click()
         except ElementClickInterceptedException:
@@ -208,7 +211,8 @@ class LoginSearcher(AdvancedSearcherer,Performer):
         # N[0].click()
         N=self.advanced_finder(["login","登录","Log In"],"button")
         if N:
-            N.click()
+            try:N.click()
+            except TimeoutException:pass
 
 
 if __name__ == '__main__':

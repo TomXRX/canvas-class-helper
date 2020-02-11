@@ -12,9 +12,11 @@ auto sign-in
 A good heart, which you do not have since you are visiting this page.
 
 # 前置步骤
-	https://www.python.org/downloads/
-	https://www.google.com/chrome/
-	https://chromedriver.chromium.org/downloads
+https://www.python.org/downloads/
+
+https://www.google.com/chrome/
+
+https://chromedriver.chromium.org/downloads
 
 
 # 操作步骤

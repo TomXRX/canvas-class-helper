@@ -24,7 +24,7 @@ with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0) as a:
     print("all done")
     print("waiting...")
     while 1:
-        if a.wait_click(track,check=2):break
+        if a.wait_click(track2,check=2):break
 
 
     print("all done")

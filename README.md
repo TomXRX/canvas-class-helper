@@ -11,6 +11,12 @@ auto sign-in
 # Requirements
 A good heart, which you do not have since you are visiting this page.
 
+# 前置步骤
+https://www.python.org/downloads/
+https://www.google.com/chrome/
+https://chromedriver.chromium.org/downloads
+
+
 # 操作步骤
 找个文件夹，下载selener中的base，在文件夹中新建一个叫selener的文件夹，然后把base放进去。
 在那个找到的文件夹中下载login.py，然后修改邮箱和密码用于自动登录。

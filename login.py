@@ -22,9 +22,10 @@ with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0) as a:
     a.login(邮箱,密码,"电子邮件")
     a.wait_click(track)
     print("all done")
-    print("waiting...")
+    print("waiting...") 
     while 1:
-        if a.wait_click(track2,check=2):break
+        if a.wait_click(track2,check=2,timeout=30):break
+        a.driver.refresh()
 
 
     print("all done")

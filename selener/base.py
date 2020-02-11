@@ -173,7 +173,8 @@ class LoginSearcher(AdvancedSearcherer,Performer):
     def __init__(self,*lis,login=1,usr=None,password=None,**dic):
         super().__init__(*lis,**dic)
         if login:self.login(usr,password)
-    def drive(self,drive="C",headless=False):
+    def drive(self,drive="C",user_profile=False,headless=False):
+        if not user_profile:return super().drive(drive,headless)
         import re
         from selenium import webdriver
         if re.match(drive,"Chrome",re.IGNORECASE):

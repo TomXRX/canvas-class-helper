@@ -18,6 +18,7 @@ https://www.google.com/chrome/
 
 https://chromedriver.chromium.org/downloads
 
+	↑需要加到path路径
 
 # 操作步骤
 找个文件夹，下载selener中的base，在文件夹中新建一个叫selener的文件夹，然后把base放进去。

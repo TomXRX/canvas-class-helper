@@ -39,9 +39,15 @@ class Searcher:
             print(k.text, end="    ")
             print(k.get_attribute("href"))
 
-    def attr_finder(self,search,ret=True,inside=None):
+    def attr_finder(self,search,ret=True,inside=None,**kwargs):
         if not inside:inside=self.driver
         for k in inside.find_elements_by_xpath('//*[@*="' + search + '"]'):
+            for key in kwargs:
+                item=kwargs[key]
+                if key=="text":
+                    if not item in k.text:continue
+                else:
+                    if not item in k.get_attribute(key):continue
             if not k.is_displayed(): continue
             yield k
 
@@ -137,7 +143,7 @@ from selenium.common.exceptions import *
 import selenium.webdriver.remote.webelement as webelement
 class Performer(Searcher):
 
-    def scroll_down_click(self, get, scrolls=5):
+    def scroll_down_click(self, get, scrolls=5,**kwargs):
         if type(get)==list:
             for k in get:
                 self.scroll_down_click(k)
@@ -149,7 +155,7 @@ class Performer(Searcher):
                 get.click()
             except:
                 self.driver.execute_script("window.scrollBy(0,300)")
-    def wait_click(self,get,timeout=5,check=0.5):
+    def wait_click(self,get,timeout=5,check=0.5,**kwargs):
         if type(get)==list:
             ret=None
             for k in get:
@@ -157,7 +163,11 @@ class Performer(Searcher):
             return ret
         assert type(get) == str
         for k in range(int(timeout/check)):
-            g = self.advanced_finder_(get)
+            try:
+                if "type" in kwargs:g=self.attr_finder(get,**kwargs)
+                else:g = self.advanced_finder_(get,**kwargs)
+            except StaleElementReferenceException:pass
+            except TimeoutException:pass
             try:
                 self.advance_click(g)
                 break
@@ -198,7 +208,7 @@ class LoginSearcher(AdvancedSearcherer,Performer):
         from selenium.webdriver.common.keys import Keys
         if usr:
             if type(usr_find)==str:usr_find=[usr_find]
-            usr_find.extend(["用户名","username"])
+            usr_find.extend(["用户名","username","邮箱"])
             B=self.advanced_finder(usr_find[::-1])
             if not B:return False
             B.send_keys(Keys.CONTROL, "a")
@@ -210,12 +220,13 @@ class LoginSearcher(AdvancedSearcherer,Performer):
         # N=self.attr_finder("登录",old=True)
         # if not N:N=self.attr_finder("login",old=True)
         # N[0].click()
-        N=self.advanced_finder(["login","登录","Log In"],"button")
+        N=self.advanced_finder(["登录","login","Log In"],"button")
+        if not N:
+            N=self.advanced_finder(["登录","login","Log In"])
         if N:
             try:N.click()
             except TimeoutException:pass
             return True
-        
 
 
 if __name__ == '__main__':

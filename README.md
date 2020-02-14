@@ -34,6 +34,3 @@ canvas 自己有pythonapi，但是好像不能假装在线
 
 https://github.com/ucfopen/canvasapi
 
-手机端可以这么撸，但是得自己动手（指录屏
-
-https://canvas.northseattle.edu/courses/1204498/pages/canvas-recording-audio?module_item_id=25908956

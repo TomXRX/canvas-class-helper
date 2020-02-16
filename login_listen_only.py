@@ -2,6 +2,7 @@
 密码="password"
 课程="class"
 #写部分名称用于匹配即可
+系统语言="中文"
 
 
 
@@ -42,7 +43,8 @@ if 0:
 print("start")
 
 track=[课程,"Conferences",]
-track2=["Join","仅聆听"]
+if 系统语言=="中文":track2=["Join","仅聆听"]
+else:track2=["Join","only"]
 with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0,wait=100) as a:
     a.login(邮箱,密码,"电子邮件")
     a.wait_click(track)
@@ -51,7 +53,8 @@ with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0,wait=1
     while 1:
         if a.wait_click(track2,check=2,timeout=30):break
         a.driver.refresh()
-
+    a.driver.switch_to_window(a.driver.window_handles[1])
+    a.wait_click(track2)
     print("all done")
     print("DO NOT CLOSE THIS TERMINAL")
     while 0:

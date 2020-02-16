@@ -1,8 +1,8 @@
 import selenium
 from selenium.common import exceptions
 class Searcher:
-    def __init__(self,link,debug=True,wait=10):
-        self.driver=self.drive(headless=not debug)
+    def __init__(self,link,debug=True,wait=10,**kwargs):
+        self.driver=self.drive(headless=not debug,**kwargs)
         self.driver.get("http://127.0.0.1")
         # self.driver.implicitly_wait(wait)
         self.driver.set_page_load_timeout(wait)
@@ -155,7 +155,7 @@ class Performer(Searcher):
                 get.click()
             except:
                 self.driver.execute_script("window.scrollBy(0,300)")
-    def wait_click(self,get,timeout=5,check=0.5,**kwargs):
+    def wait_click(self,get,timeout=5,check=0.1,**kwargs):
         if type(get)==list:
             ret=None
             for k in get:
@@ -187,8 +187,9 @@ class LoginSearcher(AdvancedSearcherer,Performer):
     def __init__(self,*lis,login=1,usr=None,password=None,**dic):
         super().__init__(*lis,**dic)
         if login:self.login(usr,password)
-    def drive(self,drive="C",user_profile=False,headless=False):
-        if not user_profile:return super().drive(drive,headless)
+    def drive(self,drive="C",user_profile=False,headless=False,**kwargs):
+        if not kwargs:
+            if not user_profile:return super().drive(drive,headless)
         import re
         from selenium import webdriver
         if re.match(drive,"Chrome",re.IGNORECASE):
@@ -197,8 +198,17 @@ class LoginSearcher(AdvancedSearcherer,Performer):
             options = webdriver.FirefoxOptions()
         if headless:
             options.headless = True
-        options.add_argument(r"user-data-dir=C:\Program Files (x86)\Google\Chrome\User Data")
-        options.binary_location=r"C:\Program Files (x86)\Google\Chrome\Application\Chrome.exe"
+        if user_profile:
+            if type(user_profile) == str:
+                location = user_profile
+            else:
+                location = r"C:\Program Files (x86)\Google\Chrome\User Data"
+            print(location)
+            options.add_argument(r"user-data-dir=" + location)
+
+        if "fake_mic" in kwargs:
+            options.add_argument('use-fake-ui-for-media-stream')
+        # options.binary_location=r"C:\Program Files (x86)\Google\Chrome\Application\Chrome.exe"
         if re.match(drive, "Chrome", re.IGNORECASE):
             return webdriver.Chrome(chrome_options=options)
         else:

@@ -53,7 +53,7 @@ with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0,wait=1
     while 1:
         if a.wait_click(track2,check=2,timeout=30):break
         a.driver.refresh()
-    a.driver.switch_to_window(a.driver.window_handles[1])
+    a.driver.switch_to.window(a.driver.window_handles[1])
     a.wait_click(track2)
     print("all done")
     print("DO NOT CLOSE THIS TERMINAL")

@@ -43,8 +43,12 @@ if 0:
 print("start")
 
 track=[课程,"Conferences",]
-if 系统语言=="中文":track2=["Join","仅聆听"]
-else:track2=["Join","only"]
+if 系统语言=="中文":
+    track2=["Join"]
+    track3=["仅聆听"]
+else:
+    track2=["Join"]
+    track3=["only"]
 with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0,wait=100) as a:
     a.login(邮箱,密码,"电子邮件")
     a.wait_click(track)
@@ -54,7 +58,7 @@ with LoginSearcher(r"https://canvas.instructure.com/login/canvas",login=0,wait=1
         if a.wait_click(track2,check=2,timeout=30):break
         a.driver.refresh()
     a.driver.switch_to.window(a.driver.window_handles[1])
-    a.wait_click(track2)
+    a.wait_click(track3)
     print("all done")
     print("DO NOT CLOSE THIS TERMINAL")
     while 0:
